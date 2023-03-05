@@ -11,9 +11,12 @@ public class ArmIn extends CommandBase {
         addRequirements(m_armss);
     }
 
-
     @Override
     public void initialize(){
+        //m_armss.ArmIn();
+    }
+    @Override
+    public void execute(){
         m_armss.ArmIn();
     }
 

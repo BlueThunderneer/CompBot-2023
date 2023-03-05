@@ -32,7 +32,7 @@ public class ArmSS extends SubsystemBase{
             m_sMax2 = new CANSparkMax(33, MotorType.kBrushless);
             m_sMax2.restoreFactoryDefaults();
             //m_PidController = m_sMax.getPIDController();
-            m_encoder = m_sMax.getEncoder();
+            m_encoder = m_sMax2.getEncoder();
            
             //air = new Compressor(6, PneumaticsModuleType.CTREPCM);
             /*kP = 0.1; 
@@ -89,12 +89,16 @@ public class ArmSS extends SubsystemBase{
     }
   
     public void ArmDown(){
-        m_sMax.set(-1);
+    m_sMax.set(-1);
     }
 
-    public void ArmIn(){
+    public void ArmIn()
+    {
+    if (m_encoder.getPosition() < 10) {
+        m_sMax2.set(0);
+    } else {
         m_sMax2.set(-1);
-    }
+    }}
   
     public void ArmOut(){
         m_sMax2.set(1);
