@@ -79,4 +79,10 @@ public class RobotContainer {
     // no auto
     return new InstantCommand();
   }
+
+  public Command getArmMove( ){
+    return new ArmMove(
+         m_armss, () -> m_opJoy1.getRawAxis(1));
+   }
+
 }

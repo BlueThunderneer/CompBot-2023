@@ -19,6 +19,6 @@ public class ArmDown extends CommandBase {
 
     @Override 
     public void end(boolean interupted){
-        m_armss.stop();
+        m_armss.armrotstop();
     }
 }

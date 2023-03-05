@@ -84,6 +84,11 @@ public class ArmSS extends SubsystemBase{
 
     }
 
+
+  public void ArmMove(double armSpeed) {
+    m_sMax.set(armSpeed);
+    }
+
   public void ArmUp(){
     m_sMax.set(1);
     }
@@ -106,8 +111,13 @@ public class ArmSS extends SubsystemBase{
 
 
     public void stop() {
-        m_sMax.set(0);
         m_sMax2.set(0);
+
+        // set to 0 velocity when stop
+    }
+
+    public void armrotstop() {
+        m_sMax.set(0);
 
         // set to 0 velocity when stop
     }
