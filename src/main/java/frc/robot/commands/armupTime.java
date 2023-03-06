@@ -24,7 +24,7 @@ public class armupTime extends CommandBase{
     }
     @Override
     public void end(boolean interrupted){
-        m_ArmSS.stop();
+        m_ArmSS.armrotstop();
     }
     @Override
     public boolean isFinished(){

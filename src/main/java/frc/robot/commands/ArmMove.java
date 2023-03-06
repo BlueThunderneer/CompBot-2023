@@ -1,20 +1,28 @@
 package frc.robot.commands;
 import frc.robot.subsystems.ArmSS;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.util.function.Supplier;
 
-public class ArmUp extends CommandBase {
+public class ArmMove extends CommandBase {
     private final ArmSS m_armss; 
-
-    public ArmUp(ArmSS subsystem){
-
+    private final Supplier<Double> m_armspeed;
+    
+    public ArmMove(
+        ArmSS subsystem,
+        Supplier<Double> armSpeed){
         m_armss = subsystem;
+        m_armspeed = armSpeed;
         addRequirements(m_armss);
     }
 
 
     @Override
     public void initialize(){
-        m_armss.ArmUp();
+    }
+
+    @Override
+    public void execute(){
+        m_armss.ArmMove(m_armspeed.get());
     }
 
     @Override 

@@ -37,6 +37,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     // Configure default commands
+    m_armss.setDefaultCommand(getArmMove());
     // Set the default drive command to split-stick arcade drive
     m_robotDrive.setDefaultCommand(
         // A split-stick arcade command, with forward/backward controlled by the left
@@ -79,4 +80,9 @@ public class RobotContainer {
     // no auto
     return new InstantCommand();
   }
+
+  public Command getArmMove( ){
+    return new ArmMove(m_armss, () -> m_opJoy1.getRawAxis(1));
+   }
+
 }
