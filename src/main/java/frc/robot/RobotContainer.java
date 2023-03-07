@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -67,8 +68,10 @@ public class RobotContainer {
     // is scheduled over it.
     new JoystickButton(m_opJoy1, 2).whenPressed(new CloseClaw(m_clawss));
     new JoystickButton(m_opJoy1, 1).whenPressed(new OpenClaw(m_clawss));
-    new JoystickButton(m_opJoy1, 5).whenHeld(new ArmUp(m_armss));
-    new JoystickButton(m_opJoy1, 3).whenHeld(new ArmDown(m_armss));
+    //Moved this to Joystick Axis
+    //new JoystickButton(m_opJoy1, 5).whenHeld(new ArmUp(m_armss));
+    // JoystickButton(m_opJoy1, 3).whenHeld(new ArmDown(m_armss));
+    new JoystickButton(m_opJoy1, 7).whenPressed(new resetArmEncoder(m_armss));
     new JoystickButton(m_opJoy1, 4).whenHeld(new ArmIn(m_armss));
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));
@@ -77,8 +80,7 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    // no auto
-    return new InstantCommand();
+    return new AutonTime(m_clawss, m_robotDrive, m_armss);
   }
 
   public Command getArmMove( ){

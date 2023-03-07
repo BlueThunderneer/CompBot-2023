@@ -19,8 +19,8 @@ public final class Constants {
     public static final int kRightMotor1Port = 13;
     public static final int kRightMotor2Port = 14;
 
-    public static final int[] kLeftEncoderPorts = new int[] {10, 11}; // Chage 9 back to 11 or get sashimi'd
-    public static final int[] kRightEncoderPorts = new int[] {12, 13};
+    public static final int[] kLeftEncoderPorts = new int[] {11, 12}; // Chage 9 back to 11 or get sashimi'd
+    public static final int[] kRightEncoderPorts = new int[] {13, 14};
     public static final boolean kLeftEncoderReversed = false;
     public static final boolean kRightEncoderReversed = true;
     public static final int[] kArmEncoderPort = new int[] {15, 16};

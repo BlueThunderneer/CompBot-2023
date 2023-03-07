@@ -29,8 +29,9 @@ public class ArmSS extends SubsystemBase{
         public ArmSS(){
             m_sMax = new CANSparkMax(15, MotorType.kBrushless);
             m_sMax.restoreFactoryDefaults();
-            m_sMax2 = new CANSparkMax(33, MotorType.kBrushless);
+            m_sMax2 = new CANSparkMax(33, MotorType.kBrushless );
             m_sMax2.restoreFactoryDefaults();
+            m_sMax2.setInverted(true);
             //m_PidController = m_sMax.getPIDController();
             m_encoder = m_sMax2.getEncoder();
            
@@ -83,7 +84,10 @@ public class ArmSS extends SubsystemBase{
         SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
 
     }
-
+  /** Resets the drive encoders to currently read a position of 0. */
+  public void resetArmEncoder() {
+    m_encoder.setPosition(0);
+  }
 
   public void ArmMove(double armSpeed) {
     m_sMax.set(armSpeed);
@@ -103,10 +107,15 @@ public class ArmSS extends SubsystemBase{
         m_sMax2.set(0);
     } else {
         m_sMax2.set(-1);
-    }}
+    }
+}
   
     public void ArmOut(){
-        m_sMax2.set(1);
+        if (m_encoder.getPosition() > 170) {
+            m_sMax2.set(0);
+        } else {
+            m_sMax2.set(1);
+        }
     }
 
 
