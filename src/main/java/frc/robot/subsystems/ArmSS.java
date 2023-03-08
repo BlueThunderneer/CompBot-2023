@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
+
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants.DriveConstants;
 
@@ -17,6 +19,7 @@ public class ArmSS extends SubsystemBase{
 
         private CANSparkMax m_sMax;
         private CANSparkMax m_sMax2;
+        private double m_armSpeed;
 
 
        // private SparkMaxPIDController m_PidController;
@@ -27,13 +30,15 @@ public class ArmSS extends SubsystemBase{
 
         
         public ArmSS(){
+            //telescope motor
             m_sMax = new CANSparkMax(15, MotorType.kBrushless);
             m_sMax.restoreFactoryDefaults();
+            m_sMax.setInverted(true);
+            //arm rotate motor
             m_sMax2 = new CANSparkMax(33, MotorType.kBrushless );
             m_sMax2.restoreFactoryDefaults();
-            m_sMax2.setInverted(true);
             //m_PidController = m_sMax.getPIDController();
-            m_encoder = m_sMax2.getEncoder();
+            m_encoder = m_sMax2.getEncoder(Type.kHallSensor,42);
            
             //air = new Compressor(6, PneumaticsModuleType.CTREPCM);
             /*kP = 0.1; 
@@ -90,20 +95,24 @@ public class ArmSS extends SubsystemBase{
   }
 
   public void ArmMove(double armSpeed) {
-    m_sMax.set(armSpeed);
+    if (armSpeed < 0) {m_armSpeed = (armSpeed*armSpeed)*-1; 
+        m_sMax.set(m_armSpeed);   
     }
-
+    else {m_armSpeed=armSpeed*armSpeed;
+        m_sMax.set(m_armSpeed);
+    }
+}
   public void ArmUp(){
-    m_sMax.set(1);
+    m_sMax.set(0.5);
     }
   
     public void ArmDown(){
-    m_sMax.set(-1);
+    m_sMax.set(-0.5);
     }
 
     public void ArmIn()
     {
-    if (m_encoder.getPosition() < 10) {
+    if (m_encoder.getPosition() < 20) {
         m_sMax2.set(0);
     } else {
         m_sMax2.set(-1);
@@ -111,7 +120,7 @@ public class ArmSS extends SubsystemBase{
 }
   
     public void ArmOut(){
-        if (m_encoder.getPosition() > 170) {
+        if (m_encoder.getPosition() > 150) {
             m_sMax2.set(0);
         } else {
             m_sMax2.set(1);
