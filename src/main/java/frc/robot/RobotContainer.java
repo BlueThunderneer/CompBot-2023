@@ -80,7 +80,7 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return new AutonTime(m_clawss, m_robotDrive, m_armss);
+    return new AutonTime2(m_clawss, m_robotDrive, m_armss);
   }
 
   public Command getArmMove( ){
