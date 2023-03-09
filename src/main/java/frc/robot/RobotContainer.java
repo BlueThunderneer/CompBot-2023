@@ -72,6 +72,7 @@ public class RobotContainer {
     //new JoystickButton(m_opJoy1, 5).whenHeld(new ArmUp(m_armss));
     // JoystickButton(m_opJoy1, 3).whenHeld(new ArmDown(m_armss));
     new JoystickButton(m_opJoy1, 7).whenPressed(new resetArmEncoder(m_armss));
+    new JoystickButton(m_opJoy1, 8).whenPressed(new resetArmRotEncoder(m_armss));
     new JoystickButton(m_opJoy1, 4).whenHeld(new ArmIn(m_armss));
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));

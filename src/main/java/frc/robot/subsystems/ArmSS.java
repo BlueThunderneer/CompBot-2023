@@ -25,22 +25,26 @@ public class ArmSS extends SubsystemBase{
        // private SparkMaxPIDController m_PidController;
        // public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
         private RelativeEncoder m_encoder;
+        private RelativeEncoder m_rotencoder;
 
         //Compressor air;
 
         
         public ArmSS(){
-            //telescope motor
+            //Arm Rotate motor
             m_sMax = new CANSparkMax(15, MotorType.kBrushless);
             m_sMax.restoreFactoryDefaults();
             m_sMax.setInverted(true);
-            //arm rotate motor
+            m_rotencoder = m_sMax.getEncoder(Type.kHallSensor,42);
+            //arm Telescope motor
             m_sMax2 = new CANSparkMax(33, MotorType.kBrushless );
             m_sMax2.restoreFactoryDefaults();
-            //m_PidController = m_sMax.getPIDController();
             m_encoder = m_sMax2.getEncoder(Type.kHallSensor,42);
-           
-            //air = new Compressor(6, PneumaticsModuleType.CTREPCM);
+
+            //m_PidController = m_sMax.getPIDController();
+
+          
+
             /*kP = 0.1; 
             kI = 1e-4;
             kD = 1; 
@@ -86,21 +90,32 @@ public class ArmSS extends SubsystemBase{
       // if PID coefficients on SmartDashboard have changed, write new values to controller
 
         SmartDashboard.putNumber("SetPoint", rotations);
-        SmartDashboard.putNumber("ProcessVariable", m_encoder.getPosition());
+        SmartDashboard.putNumber("Telescope Pos", m_encoder.getPosition());
+        SmartDashboard.putNumber("Rotation Pos", m_rotencoder.getPosition());
 
     }
-  /** Resets the drive encoders to currently read a position of 0. */
+  /** Resets the Telescope encoder to currently read a position of 0. */
   public void resetArmEncoder() {
     m_encoder.setPosition(0);
   }
 
+ /** Resets the Rotation encoders to currently read a position of 0. */
+ public void resetArmRotEncoder() {
+    m_encoder.setPosition(0);
+  }
+
   public void ArmMove(double armSpeed) {
-    if (armSpeed < 0) {m_armSpeed = (armSpeed*armSpeed)*-1; 
-        m_sMax.set(m_armSpeed);   
-    }
-    else {m_armSpeed=armSpeed*armSpeed;
-        m_sMax.set(m_armSpeed);
-    }
+        if (armSpeed < 0 ) {
+            m_armSpeed = (armSpeed*armSpeed)*-1; 
+            m_sMax.set(m_armSpeed);   
+        }
+        else {
+            if(m_rotencoder.getPosition() >20 ){
+                m_armSpeed=armSpeed*armSpeed;
+                m_sMax.set(m_armSpeed);
+                }
+            else {m_sMax.set(0);}
+        }
 }
   public void ArmUp(){
     m_sMax.set(0.5);
