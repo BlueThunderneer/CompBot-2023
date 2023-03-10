@@ -77,6 +77,7 @@ public class RobotContainer {
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));
     new JoystickButton(m_driverController, 3).whenPressed(new airON(m_clawss));
+    //new JoystickButton(m_opJoy1, 11).whenPressed(new addArmRotEncoder(m_armss)); THIS BREAKS STUFF!!!
    }
 
 

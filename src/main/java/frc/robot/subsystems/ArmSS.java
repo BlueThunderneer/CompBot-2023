@@ -90,8 +90,10 @@ public class ArmSS extends SubsystemBase{
       // if PID coefficients on SmartDashboard have changed, write new values to controller
 
         SmartDashboard.putNumber("SetPoint", rotations);
+        SmartDashboard.putNumber("Rot Current", m_sMax.getOutputCurrent());
+        SmartDashboard.putNumber("Telescope Current",m_sMax2.getOutputCurrent());
         SmartDashboard.putNumber("Telescope Pos", m_encoder.getPosition());
-        SmartDashboard.putNumber("Rotation Pos", m_rotencoder.getPosition());
+        SmartDashboard.putNumber("Rotation Pos", m_rotencoder.getPosition()*-1);
 
     }
   /** Resets the Telescope encoder to currently read a position of 0. */
@@ -101,7 +103,7 @@ public class ArmSS extends SubsystemBase{
 
  /** Resets the Rotation encoders to currently read a position of 0. */
  public void resetArmRotEncoder() {
-    m_encoder.setPosition(0);
+    m_rotencoder.setPosition(0);
   }
 
   public void ArmMove(double armSpeed) {
@@ -109,14 +111,15 @@ public class ArmSS extends SubsystemBase{
             m_armSpeed = (armSpeed*armSpeed)*-1; 
             m_sMax.set(m_armSpeed);   
         }
-        else {
-            if(m_rotencoder.getPosition() >20 ){
+        else {              
+            if(m_rotencoder.getPosition()*-1 > 3 ){
                 m_armSpeed=armSpeed*armSpeed;
                 m_sMax.set(m_armSpeed);
                 }
             else {m_sMax.set(0);}
         }
 }
+
   public void ArmUp(){
     m_sMax.set(0.5);
     }
