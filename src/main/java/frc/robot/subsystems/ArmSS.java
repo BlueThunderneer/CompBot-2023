@@ -40,9 +40,9 @@ public class ArmSS extends SubsystemBase{
             m_sMax2 = new CANSparkMax(33, MotorType.kBrushless );
             m_sMax2.restoreFactoryDefaults();
             m_encoder = m_sMax2.getEncoder(Type.kHallSensor,42);
-
+           
             //m_PidController = m_sMax.getPIDController();
-
+           
           
 
             /*kP = 0.1; 
@@ -118,7 +118,7 @@ public class ArmSS extends SubsystemBase{
                 }
             else {m_sMax.set(0);}
         }
-}
+    }
 
   public void ArmUp(){
     m_sMax.set(0.5);

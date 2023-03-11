@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,12 +33,16 @@ public class RobotContainer {
   // The driver's controller
   private final Joystick m_driverController = new Joystick(0);
   private final Joystick m_opJoy1 = new Joystick(1);
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+		// Autonomous mode selector
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+                          
     // Configure the button bindings
     configureButtonBindings();
     // Configure default commands
+
     m_armss.setDefaultCommand(getArmMove());
     // Set the default drive command to split-stick arcade drive
     m_robotDrive.setDefaultCommand(
@@ -47,6 +52,11 @@ public class RobotContainer {
             () ->
                 m_robotDrive.arcadeDrive(
                     -m_driverController.getRawAxis(1), -m_driverController.getRawAxis(2)),m_robotDrive));
+      m_chooser.setDefaultOption("Drive Only", new AutonTime(m_clawss, m_robotDrive, m_armss));
+      m_chooser.addOption("Drive w/ Claw", new AutonTime2(m_clawss, m_robotDrive, m_armss));
+      m_chooser.addOption("Balance", new AutonTime3(m_clawss, m_robotDrive, m_armss));
+                  
+      SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -82,7 +92,7 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return new AutonTime2(m_clawss, m_robotDrive, m_armss);
+    return m_chooser.getSelected();
   }
 
   public Command getArmMove( ){
@@ -90,3 +100,4 @@ public class RobotContainer {
    }
 
 }
+
