@@ -22,8 +22,9 @@ public class AutonTime2 extends SequentialCommandGroup {
         new armupTime(0.8, m_armss), //Raise the Cargo arm to shoot need to add this subsystem to the contstructor)
         //new armdownTime(0.5, m_armss),
         //new DriveDistance( 0.75, 0, 216, m_drivetrain )
-        new DriveTime( -0.6, 0.0, 2.0, m_drivetrain) // go backwards for X seconds
+        new DriveTime( -0.6, 0.0, 2.0, m_drivetrain), // go backwards for X seconds
         // Caffiene addiction lvl 100
+        new DriveTime(0, 0.5,2 , m_drivetrain)
         ); //end of addCommands
      
   }    

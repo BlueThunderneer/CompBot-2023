@@ -55,7 +55,7 @@ public class RobotContainer {
       m_chooser.setDefaultOption("Drive Only", new AutonTime(m_clawss, m_robotDrive, m_armss));
       m_chooser.addOption("Drive w/ Claw", new AutonTime2(m_clawss, m_robotDrive, m_armss));
       m_chooser.addOption("Balance", new AutonTime3(m_clawss, m_robotDrive, m_armss));
-                  
+              
       SmartDashboard.putData("Auto mode", m_chooser);
   }
 

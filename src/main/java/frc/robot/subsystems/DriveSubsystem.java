@@ -15,6 +15,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.*;
 
 public class DriveSubsystem extends SubsystemBase {
   // The motors on the left side of the drive.
@@ -53,6 +55,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // The gyro sensor
   //private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final AutoBalance m_autobalance = new AutoBalance();
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -60,6 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
     m_rightMotors.setInverted(true);
+    SmartDashboard.putNumber("Tilt_DT", m_autobalance.getPitch());
 
     // Sets the distance per pulse for the encoders
     m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);

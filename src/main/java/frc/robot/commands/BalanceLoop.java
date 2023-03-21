@@ -1,5 +1,4 @@
 package frc.robot.commands;
-import frc.robot.commands.AutoBalance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
