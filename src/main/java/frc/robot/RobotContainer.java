@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final Vision m_vision = new Vision();
+
   public final ArmSS m_armss = new ArmSS();
   public final ClawSS m_clawss = new ClawSS();
   // The driver's controller
@@ -77,6 +79,8 @@ public class RobotContainer {
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));
     new JoystickButton(m_driverController, 3).whenPressed(new airON(m_clawss));
+    new JoystickButton(m_driverController, 6).whenHeld(new LockOnTarget(m_robotDrive, m_vision));
+
     //new JoystickButton(m_opJoy1, 11).whenPressed(new addArmRotEncoder(m_armss)); THIS BREAKS STUFF!!!
    }
 
