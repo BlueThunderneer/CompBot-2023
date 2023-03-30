@@ -41,6 +41,7 @@ public class RobotContainer {
   // configure Auton commands here.
   private final Command m_LandDAuto = new AutonTime2(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto2 = new AutonTime3(m_clawss, m_robotDrive, m_armss);
+  private final Command m_TargetAuto = new AutonTime4(m_clawss, m_robotDrive, m_armss, m_vision);
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -55,7 +56,8 @@ public class RobotContainer {
     //Auton Options
     m_chooser.setDefaultOption("Launch n Drive", m_LandDAuto);
     m_chooser.addOption("Launch n Drive", m_LandDAuto);
-    m_chooser.addOption("Launch n Drive n Pickup", m_LandDAuto2);
+    m_chooser.addOption("Drive Over Platform", m_LandDAuto2);
+    m_chooser.addOption("Target Cube", m_TargetAuto);
     // Configure autonomous sendable chooser
     SmartDashboard.putData("Auto Mode", m_chooser);
 
