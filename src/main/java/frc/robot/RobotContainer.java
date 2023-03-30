@@ -10,6 +10,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.ColorSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -31,16 +33,32 @@ public class RobotContainer {
 
   public final ArmSS m_armss = new ArmSS();
   public final ClawSS m_clawss = new ClawSS();
+  public final ColorSubsystem m_colorss = new ColorSubsystem();
   // The driver's controller
   private final Joystick m_driverController = new Joystick(0);
   private final Joystick m_opJoy1 = new Joystick(1);
 
+  // configure Auton commands here.
+  private final Command m_LandDAuto = new AutonTime2(m_clawss, m_robotDrive, m_armss);
+  private final Command m_LandDAuto2 = new AutonTime3(m_clawss, m_robotDrive, m_armss);
+  
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     // Configure default commands
     m_armss.setDefaultCommand(getArmMove());
+
+    //Auton Options
+    m_chooser.setDefaultOption("Launch n Drive", m_LandDAuto);
+    m_chooser.addOption("Launch n Drive", m_LandDAuto);
+    m_chooser.addOption("Launch n Drive n Pickup", m_LandDAuto2);
+    // Configure autonomous sendable chooser
+    SmartDashboard.putData("Auto Mode", m_chooser);
+
     // Set the default drive command to split-stick arcade drive
     m_robotDrive.setDefaultCommand(
         // A split-stick arcade command, with forward/backward controlled by the left
@@ -85,9 +103,14 @@ public class RobotContainer {
    }
 
 
-  public Command getAutonomousCommand() {
-    return new AutonTime4(m_clawss, m_robotDrive, m_armss, m_vision);
+public Command getAutonomousCommand() {
+    // The selected command will be run in autonomous
+    return m_chooser.getSelected();
+
   }
+ // public Command getAutonomousCommand() {
+    //return new AutonTime2(m_clawss, m_robotDrive, m_armss);
+ // }
 
   public Command getArmMove( ){
     return new ArmMove(m_armss, () -> m_opJoy1.getRawAxis(1));

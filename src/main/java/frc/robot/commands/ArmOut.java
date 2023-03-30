@@ -14,6 +14,11 @@ public class ArmOut extends CommandBase {
 
     @Override
     public void initialize(){
+       
+    }
+
+    @Override
+    public void execute(){
         m_armss.ArmOut();
     }
 
