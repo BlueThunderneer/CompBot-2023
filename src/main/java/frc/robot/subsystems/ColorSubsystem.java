@@ -3,21 +3,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
 
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
 
+import com.revrobotics.*;
+import com.revrobotics.Rev2mDistanceSensor.Port;
 
 public class ColorSubsystem extends SubsystemBase {
-    private final I2C.Port i2cPort = I2C.Port.kOnboard;
-    private final ColorSensorV3 m_cs = new ColorSensorV3(i2cPort);  
+    //private final Port i2cPort = I2C.Port.kOnboard;
+    public Rev2mDistanceSensor m_cs;  
     public AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(44); 
     public AddressableLED m_led = new AddressableLED(9);
 
     public ColorSubsystem(){
+        m_cs = new Rev2mDistanceSensor(Port.kOnboard); 
+        m_cs.setAutomaticMode(true);
+        m_cs.setEnabled(true);
         // Length is expensive to set, so only set it once, then just update data
         m_led.setLength(m_ledBuffer.getLength());
         // Set the data
@@ -27,32 +27,35 @@ public class ColorSubsystem extends SubsystemBase {
   
 
 
-    @Override
-    public void periodic() {
-        int proximity = m_cs.getProximity();
-        SmartDashboard.putNumber("Cubedistance", proximity);
+@Override
+public void periodic() {
+    SmartDashboard.putNumber("Cubedistance", m_cs.getRange());
+         
+          if (m_cs.getRange() < 5.5 && m_cs.getRange() >1.5){
+            for (var i = 0; i < m_ledBuffer.getLength(); i++) { 
+                //green
+               m_ledBuffer.setRGB(i, 230, 0, 255);
+           }
+        } else if(m_cs.getRange() < 1.5 && m_cs.getRange() >0){
+            for (var i = 0; i < m_ledBuffer.getLength(); i++) { 
+                //green
+               m_ledBuffer.setRGB(i, 255, 165, 0);
+           }
+        }  else{
+            for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+               // red
+               m_ledBuffer.setRGB(i, 255, 0, 0);
 
-
-
-        
-//
- 
-
-        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-            if (proximity > 150){
-                // green
-                m_ledBuffer.setRGB(i, 0, 255, 0);
-
-            }
-            else{
-                // red
-                m_ledBuffer.setRGB(i, 255, 0, 0);
-
-            }
-            // Sets the specified LED to the RGB values for green
+           }
          }
     
-         //after if else send color to leds.
+    //after if else send color to leds.
      m_led.setData(m_ledBuffer);
+    
+    //if(m_cs.isRangeValid())    {
+        //double proximity = m_cs.getRange();
+       // SmartDashboard.putNumber("Cubedistance", m_cs.getRange());
+    //}       
+
     }
 }
