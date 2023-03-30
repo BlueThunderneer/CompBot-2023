@@ -108,11 +108,14 @@ public class ArmSS extends SubsystemBase{
 
   public void ArmMove(double armSpeed) {
         if (armSpeed < 0 ) {
-            m_armSpeed = (armSpeed*armSpeed)*-1; 
-            m_sMax.set(m_armSpeed);   
+            if(m_rotencoder.getPosition()*-1 < 170  ){
+                m_armSpeed=armSpeed*armSpeed*-1;
+                m_sMax.set(m_armSpeed);
+                }
+            else {m_sMax.set(0);}
         }
         else {              
-            if(m_rotencoder.getPosition()*-1 > 3 ){
+            if(m_rotencoder.getPosition()*-1 > -78 ){
                 m_armSpeed=armSpeed*armSpeed;
                 m_sMax.set(m_armSpeed);
                 }
@@ -138,7 +141,7 @@ public class ArmSS extends SubsystemBase{
 }
   
     public void ArmOut(){
-        if (m_encoder.getPosition() > 150) {
+        if (m_encoder.getPosition() > 260) {
             m_sMax2.set(0);
         } else {
             m_sMax2.set(1);
