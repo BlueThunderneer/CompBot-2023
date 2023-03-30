@@ -10,6 +10,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.ColorSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -29,6 +31,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   public final ArmSS m_armss = new ArmSS();
   public final ClawSS m_clawss = new ClawSS();
+  public final ColorSubsystem m_colorss = new ColorSubsystem();
   // The driver's controller
   private final Joystick m_driverController = new Joystick(0);
   private final Joystick m_opJoy1 = new Joystick(1);
