@@ -62,10 +62,10 @@ public class DriveSubsystem extends SubsystemBase {
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
     m_rightMotors.setInverted(true);
-   // m_l1.setOpenLoopRampRate(0.3);
-   // m_l2.setOpenLoopRampRate(0.3);
-   // m_r1.setOpenLoopRampRate(0.3);
-   // m_r2.setOpenLoopRampRate(0.3);
+    m_l1.setOpenLoopRampRate(0.3);
+    m_l2.setOpenLoopRampRate(0.3);
+    m_r1.setOpenLoopRampRate(0.3);
+    m_r2.setOpenLoopRampRate(0.3);
 
 
     // Sets the distance per pulse for the encoders
