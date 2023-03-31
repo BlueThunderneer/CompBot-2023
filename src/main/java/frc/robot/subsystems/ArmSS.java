@@ -128,7 +128,7 @@ public class ArmSS extends SubsystemBase{
     }
   
     public void ArmDown(){
-    m_sMax.set(-0.5);
+    m_sMax.set(-0.7);
     }
 
     public void ArmIn()
