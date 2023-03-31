@@ -39,6 +39,7 @@ public class RobotContainer {
   private final Joystick m_opJoy1 = new Joystick(1);
 
   // configure Auton commands here.
+  private final Command m_LandDFront = new AutonTimeFront(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto = new AutonTime2(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto2 = new AutonTime3(m_clawss, m_robotDrive, m_armss);
   private final Command m_TargetAuto = new AutonTime4(m_clawss, m_robotDrive, m_armss, m_vision);
@@ -55,6 +56,7 @@ public class RobotContainer {
 
     //Auton Options
     m_chooser.setDefaultOption("Launch n Drive", m_LandDAuto);
+    m_chooser.addOption("Front Launch", m_LandDFront);
     m_chooser.addOption("Launch n Drive", m_LandDAuto);
     m_chooser.addOption("Drive Over Platform", m_LandDAuto2);
     m_chooser.addOption("Target Cube", m_TargetAuto);
