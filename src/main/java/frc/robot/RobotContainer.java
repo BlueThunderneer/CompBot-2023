@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final Vision m_vision = new Vision();
+
   public final ArmSS m_armss = new ArmSS();
   public final ClawSS m_clawss = new ClawSS();
   public final ColorSubsystem m_colorss = new ColorSubsystem();
@@ -37,8 +39,10 @@ public class RobotContainer {
   private final Joystick m_opJoy1 = new Joystick(1);
 
   // configure Auton commands here.
+  private final Command m_LandDFront = new AutonTimeFront(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto = new AutonTime2(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto2 = new AutonTime3(m_clawss, m_robotDrive, m_armss);
+  private final Command m_TargetAuto = new AutonTime4(m_clawss, m_robotDrive, m_armss, m_vision);
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -52,8 +56,10 @@ public class RobotContainer {
 
     //Auton Options
     m_chooser.setDefaultOption("Launch n Drive", m_LandDAuto);
+    m_chooser.addOption("Front Launch", m_LandDFront);
     m_chooser.addOption("Launch n Drive", m_LandDAuto);
-    m_chooser.addOption("Launch n Drive n Pickup", m_LandDAuto2);
+    m_chooser.addOption("Drive Over Platform", m_LandDAuto2);
+    m_chooser.addOption("Target Cube", m_TargetAuto);
     // Configure autonomous sendable chooser
     SmartDashboard.putData("Auto Mode", m_chooser);
 
@@ -95,12 +101,16 @@ public class RobotContainer {
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));
     new JoystickButton(m_driverController, 3).whenPressed(new airON(m_clawss));
+    new JoystickButton(m_driverController, 6).whenHeld(new LockOnTarget(m_robotDrive, m_vision));
+
     //new JoystickButton(m_opJoy1, 11).whenPressed(new addArmRotEncoder(m_armss)); THIS BREAKS STUFF!!!
    }
+
 
 public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     return m_chooser.getSelected();
+
   }
  // public Command getAutonomousCommand() {
     //return new AutonTime2(m_clawss, m_robotDrive, m_armss);
