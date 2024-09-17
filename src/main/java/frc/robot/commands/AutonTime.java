@@ -10,7 +10,7 @@ public class AutonTime extends SequentialCommandGroup {
    *
    * 
    */
-  public AutonTime(ClawSS m_ClawSS, DriveSubsystem m_drivetrain, ArmSS m_armss) {
+  public AutonTime(CannonSS m_ClawSS, DriveSubsystem m_drivetrain) {
        addCommands(
         //new armupTime(3.0, m_armss), //Raise the Cargo arm to shoot need to add this subsystem to the contstructor)
         //new extendTime(0.5, m_armss),

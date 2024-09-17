@@ -3,9 +3,9 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class airOFF extends CommandBase{
-    private final ClawSS m_clawss;
+    private final CannonSS m_clawss;
 
-    public airOFF(ClawSS subsytem){
+    public airOFF(CannonSS subsytem){
         m_clawss = subsytem;
         addRequirements(m_clawss);
     }

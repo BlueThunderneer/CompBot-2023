@@ -29,16 +29,28 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+<<<<<<< Updated upstream
   public final ArmSS m_armss = new ArmSS();
   public final ClawSS m_clawss = new ClawSS();
+=======
+
+
+  public final CannonSS m_cannonss = new CannonSS();
+  //public final CandySS m_candyss = new CandySS();
+>>>>>>> Stashed changes
   public final ColorSubsystem m_colorss = new ColorSubsystem();
   // The driver's controller
   private final Joystick m_driverController = new Joystick(0);
-  private final Joystick m_opJoy1 = new Joystick(1);
+  private final Joystick m_driverController2 = new Joystick(1);
+
+  private final Joystick m_opJoy1 = new Joystick(2);
 
   // configure Auton commands here.
+<<<<<<< Updated upstream
   private final Command m_LandDAuto = new AutonTime2(m_clawss, m_robotDrive, m_armss);
   private final Command m_LandDAuto2 = new AutonTime3(m_clawss, m_robotDrive, m_armss);
+=======
+>>>>>>> Stashed changes
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -48,12 +60,14 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     // Configure default commands
-    m_armss.setDefaultCommand(getArmMove());
 
     //Auton Options
+<<<<<<< Updated upstream
     m_chooser.setDefaultOption("Launch n Drive", m_LandDAuto);
     m_chooser.addOption("Launch n Drive", m_LandDAuto);
     m_chooser.addOption("Launch n Drive n Pickup", m_LandDAuto2);
+=======
+>>>>>>> Stashed changes
     // Configure autonomous sendable chooser
     SmartDashboard.putData("Auto Mode", m_chooser);
 
@@ -84,17 +98,26 @@ public class RobotContainer {
    private void configureButtonBindings() {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
-    new JoystickButton(m_opJoy1, 2).whenPressed(new CloseClaw(m_clawss));
-    new JoystickButton(m_opJoy1, 1).whenPressed(new OpenClaw(m_clawss));
+    new JoystickButton(m_opJoy1, 2).whenHeld(new Fill(m_cannonss));
+    new JoystickButton(m_opJoy1, 1).whenHeld(new Launch(m_cannonss));
+    new JoystickButton(m_driverController2, 6).whenHeld(new Fill(m_cannonss));
+    // new JoystickButton(m_driverController2, 8).whenHeld();
+
     //Moved this to Joystick Axis
     //new JoystickButton(m_opJoy1, 5).whenHeld(new ArmUp(m_armss));
     // JoystickButton(m_opJoy1, 3).whenHeld(new ArmDown(m_armss));
+<<<<<<< Updated upstream
     new JoystickButton(m_opJoy1, 7).whenPressed(new resetArmEncoder(m_armss));
     new JoystickButton(m_opJoy1, 8).whenPressed(new resetArmRotEncoder(m_armss));
     new JoystickButton(m_opJoy1, 4).whenHeld(new ArmIn(m_armss));
     new JoystickButton(m_opJoy1, 6).whenHeld(new ArmOut(m_armss));
     new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_clawss));
     new JoystickButton(m_driverController, 3).whenPressed(new airON(m_clawss));
+=======
+    new JoystickButton(m_driverController, 4).whenPressed(new airOFF(m_cannonss));
+    new JoystickButton(m_driverController, 3).whenPressed(new airON(m_cannonss));
+
+>>>>>>> Stashed changes
     //new JoystickButton(m_opJoy1, 11).whenPressed(new addArmRotEncoder(m_armss)); THIS BREAKS STUFF!!!
    }
 
@@ -105,9 +128,5 @@ public Command getAutonomousCommand() {
  // public Command getAutonomousCommand() {
     //return new AutonTime2(m_clawss, m_robotDrive, m_armss);
  // }
-
-  public Command getArmMove( ){
-    return new ArmMove(m_armss, () -> m_opJoy1.getRawAxis(1));
-   }
 
 }
